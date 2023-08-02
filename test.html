@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Voice Assistant</title>
+  <style>
+    /* CSS for button colors */
+    body {
+      display: flex;
+      flex-direction: column;
+/*      align-items: center;*/
+/*      justify-content: center;*/
+      height: 100vh;
+      margin: 0;
+      background-color: purple;
+    }
+    #start-button {
+      background-color: green;
+      margin-top: 20px;
+      padding: 10px 30px ;
+      boader-radius : 10px;
+      color: #ffff}
+    #start-button.listening {
+      background-color: red;
+    }
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 200px;
+      height: 150px;
+      background-image: url(mc.png);
+      background-size:cover;
+      background-repeat: no-repeat;
+      background-position: unset;
+    }
+    .image-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* Creates 4 equal-width columns */
+      gap: 10px;
+/*      display: flex;*/
+/*      flex-wrap: wrap;*/
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .image-item {
+      margin: 10px;
+      width: 280px;
+      height: 190px;
+      background-size: contain !important;
+      background-repeat: no-repeat;
+      cursor: pointer;
+
+    }
+    .heading{
+      width: 50%;
+      margin: 0px auto;
+      text-align: center;
+      color: #ffff;
+
+    }
+  </style>
+</head>
+<body>
+  <div class="logo"></div>
+  <div class="heading"><h1>REVES AI ASSISTANT</h1>
+  <button id="start-button">Start Listening</button></div>
+  <div class="image-list" id="image-list"></div>
+  <script>
+    // JavaScript
+    const startButton = document.getElementById('start-button');
+    const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.lang = 'en-US';
+
+    startButton.addEventListener('click', () => {
+      startButton.classList.add('listening'); // Change button color to red while listening
+      recognition.start();
+    });
+
+    recognition.onresult = (event) => {
+      const userSpeech = event.results[event.results.length - 1][0].transcript;
+      processUserInput(userSpeech.toLowerCase());
+      startButton.classList.remove('listening'); // Change button color back to green after speaking
+    };
+
+    function avatarSpeak(text, images) {
+      const message = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(message);
+      showImageList(images); // Show the image list after avatarSpeak
+    }
+
+    function processUserInput(userInput) {
+      if (userInput.includes("hello")) {
+        const images = [
+          'bev.png', 
+          'cf.png',
+          'des.png',
+          'hm.png',
+          // 'mc.png',
+        ];
+        avatarSpeak("Welcome! to McDonald's. I am Reves, What can I get for you today? Please choose a category from the following options: chicken & fish, happy meals, desserts, beverages, or McCafe.", images);
+      } else if (userInput.includes("chicken and fish")) {
+        const images = [
+          'cf.png', 
+
+        ];
+        avatarSpeak("Great choice! Now, please choose one of the following items:\n Hot and Crispy\n McChicken\n Spicy McCrispy", images);
+      }
+       else if (userInput.includes("happy meals")) {
+        const images = [
+          'mc.png', 
+
+        ];
+        avatarSpeak("Excellent! Now, please select one of the following options:\n1. Happy Meal Beef Burger\n2. Happy Meal Cheese Burger\n3. Happy Meal Chicken Burger", images);
+      } 
+      else if (userInput.includes("desserts")) {
+        avatarSpeak("Yummy! Now, please pick one of the following desserts:\n1. Double Chocolate Pie\n2. Brownie Sundae\n3. McFlurry Oreo");
+      } else if (userInput.includes("beverages")) {
+        avatarSpeak("Great! Now, please select one of the following beverages:\n1. Orange 100% Fruit Juice\n2. Milo\n3. Chocolate Shake");
+      } else if (userInput.includes("mccafe")) {
+        avatarSpeak("Wonderful choice! Now, please select one of the following McCafe items:\n1. Iced Americano\n2. Caramel Iced Latte\n3. Chocolate Frappé");
+      } else if (userInput.includes("hot and crispy")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Hot N' Crispy?");
+      } else if (userInput.includes("chicken")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your McChicken?");
+      } else if (userInput.includes("spicy mccrispy")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Spicy McCrispy?");
+      } else if (userInput.includes("happy meal beef burger")) {
+        avatarSpeak("Great choice! Would you like to add any additional toppings to your Happy Meal Beef Burger?");
+      } else if (userInput.includes("happy meal cheese burger")) {
+        avatarSpeak("Great choice! Would you like to add any additional toppings to your Happy Meal Cheese Burger?");
+      } else if (userInput.includes("happy meal chicken burger")) {
+        avatarSpeak("Great choice! Would you like to add any additional toppings to your Happy Meal Chicken Burger?");
+      } else if (userInput.includes("double chocolate pie")) {
+        avatarSpeak("Excellent choice! Would you like to add any additional toppings to your Double Chocolate Pie?");
+      } else if (userInput.includes("brownie sundae")) {
+        avatarSpeak("Excellent choice! Would you like to add any additional toppings to your Brownie Sundae?");
+      } else if (userInput.includes("oreo")) {
+        avatarSpeak("Excellent choice! Would you like to add any additional toppings to your McFlurry Oreo?");
+      } else if (userInput.includes("orange 100% fruit juice")) {
+        avatarSpeak("Delicious! Would you like to add any additional toppings to your Orange 100% Fruit Juice?");
+      } else if (userInput.includes("milo")) {
+        avatarSpeak("Delicious! Would you like to add any additional toppings to your Milo?");
+      } else if (userInput.includes("chocolate shake")) {
+        avatarSpeak("Delicious! Would you like to add any additional toppings to your Chocolate Shake?");
+      } else if (userInput.includes("iced americano")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Iced Americano?");
+      } else if (userInput.includes("caramel iced latte")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Caramel Iced Latte?");
+      } else if (userInput.includes("chocolate frappé")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Chocolate Frappé?");
+      } else if (userInput.includes("no, thank you")) {
+        avatarSpeak("Alright, your order has been placed. Please wait for 10 minutes until it's ready.");
+      } else if (userInput.includes("thank you")) {
+        avatarSpeak("Thank you for choosing McDonald's. We'll have your order ready soon!");
+        // You can add your additional code here if needed.
+      } else {
+        avatarSpeak("Sorry, I didn't understand that.");
+      }
+    }
+
+    // Function to show the image list
+    function showImageList(images) {
+      const imageListDiv = document.getElementById('image-list');
+      imageListDiv.innerHTML = ''; // Clear the existing images if any
+
+      for (const imageUrl of images) {
+        const imageItemDiv = document.createElement('div');
+        imageItemDiv.classList.add('image-item');
+        imageItemDiv.style.backgroundImage = `url(${imageUrl})`;
+        imageItemDiv.addEventListener('click', () => {
+          // Handle image click event if needed
+          // For example, you can speak the selected item name
+          avatarSpeak(`You selected ${getImageName(imageUrl)}`);
+        });
+        imageListDiv.appendChild(imageItemDiv);
+      }
+    }
+
+    // Function to get the image name from its URL
+    function getImageName(imageUrl) {
+      const parts = imageUrl.split('/');
+      return parts[parts.length - 1].split('.')[0];
+    }
+
+    // Listen every 5 seconds
+    setInterval(() => {
+      if (!recognition.start) {
+        recognition.start();
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
+
+<!-- 
+<html>
+<head>
+  <title>Voice Assistant</title>
+  <style>
+    /* CSS for button colors */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #start-button {
+      background-color: green;
+      margin-top: 20px;
+    }
+    #start-button.listening {
+      background-color: red;
+    }
+    .logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 50px;
+      height: 50px;
+      /* Add your logo image URL here */
+      background-image: url('logo.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .image-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .image-item {
+      margin: 10px;
+      width: 150px;
+      height: 150px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo"></div>
+  <button id="start-button">Start Listening</button>
+  <div class="image-list" id="image-list"></div>
+  <script>
+
+    function processUserInput(userInput) {
+      if (userInput.includes("hello")) {
+        const images = [
+          'des.png', // Replace with your image URLs for this condition
+          'cf.png',
+          'hf.png',
+          'mcc.png'
+          // Add more image URLs as needed
+        ];
+        avatarSpeak("Welcome! to McDonald's. I am Reves, What can I get for you today? Please choose a category from the following options: chicken & fish, happy meals, desserts, beverages, or McCafe.", images);
+      } else if (userInput.includes("chicken and fish")) {
+        const images = [
+          'cf.png'
+        ];
+      else if (userInput.includes("chicken and fish")) {
+        avatarSpeak("Great choice! Now, please choose one of the following items:\n 1 for Hot and Crispy\n 2 for McChicken\n 3 for Spicy McCrispy");
+      } else if (userInput.includes("happy meals")) {
+        avatarSpeak("Excellent! Now, please select one of the following options:\n1. Happy Meal Beef Burger\n2. Happy Meal Cheese Burger\n3. Happy Meal Chicken Burger");
+      } else if (userInput.includes("desserts")) {
+        avatarSpeak("Yummy! Now, please pick one of the following desserts:\n1. Double Chocolate Pie\n2. Brownie Sundae\n3. McFlurry Oreo");
+      } else if (userInput.includes("beverages")) {
+        avatarSpeak("Great! Now, please select one of the following beverages:\n1. Orange 100% Fruit Juice\n2. Milo\n3. Chocolate Shake");
+      } else if (userInput.includes("mccafe")) {
+        avatarSpeak("Wonderful choice! Now, please select one of the following McCafe items:\n1. Iced Americano\n2. Caramel Iced Latte\n3. Chocolate Frappé");
+      } else if (userInput.includes("hot and crispy")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Hot N' Crispy?");
+      } else if (userInput.includes("chicken")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your McChicken?");
+      } else if (userInput.includes("spicy mccrispy")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Spicy McCrispy?");
+      } else if (userInput.includes("happy meal beef burger")) {
+        avatarSpeak("Great choice! Would you like to add any additional toppings to your Happy Meal Beef Burger?");
+      } else if (userInput.includes("happy meal cheese burger")) {
+        avatarSpeak("Great choice! Would you like to add any additional toppings to your Happy Meal Cheese Burger?");
+      } else if (userInput.includes("happy meal chicken burger")) {
+        avatarSpeak("Great choice! Would you like to add any additional toppings to your Happy Meal Chicken Burger?");
+      } else if (userInput.includes("double chocolate pie")) {
+        avatarSpeak("Excellent choice! Would you like to add any additional toppings to your Double Chocolate Pie?");
+      } else if (userInput.includes("brownie sundae")) {
+        avatarSpeak("Excellent choice! Would you like to add any additional toppings to your Brownie Sundae?");
+      } else if (userInput.includes("oreo")) {
+        avatarSpeak("Excellent choice! Would you like to add any additional toppings to your McFlurry Oreo?");
+      } else if (userInput.includes("orange 100% fruit juice")) {
+        avatarSpeak("Delicious! Would you like to add any additional toppings to your Orange 100% Fruit Juice?");
+      } else if (userInput.includes("milo")) {
+        avatarSpeak("Delicious! Would you like to add any additional toppings to your Milo?");
+      } else if (userInput.includes("chocolate shake")) {
+        avatarSpeak("Delicious! Would you like to add any additional toppings to your Chocolate Shake?");
+      } else if (userInput.includes("iced americano")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Iced Americano?");
+      } else if (userInput.includes("caramel iced latte")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Caramel Iced Latte?");
+      } else if (userInput.includes("chocolate frappé")) {
+        avatarSpeak("Sounds delicious! Would you like to add any additional toppings to your Chocolate Frappé?");
+      } else if (userInput.includes("no, thank you")) {
+        avatarSpeak("Alright, your order has been placed. Please wait for 10 minutes until it's ready.");
+      } else if (userInput.includes("thank you")) {
+        avatarSpeak("Thank you for choosing McDonald's. We'll have your order ready soon!");
+        // You can add your additional code here if needed.
+      } else {
+        avatarSpeak("Sorry, I didn't understand that.");
+      }
+    }
+
+    // Listen every 5 seconds
+    setInterval(() => {
+      if (!recognition.start) {
+        recognition.start();
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
+ -->
